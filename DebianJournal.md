@@ -92,13 +92,13 @@
 * Google (unc.edu.ar)
 
 ---
+## Zen Browser Setup
 
-## Firefox Setup
-
-* Synced bookmarks via Firefox account
-* Enabled: *Ctrl+Tab cycles tabs by recent order*
-* Showed bookmarks toolbar
-* Installed **RoboForm** extension
+* Installed it through Flatpak in Software App
+* Logged in to sync bookmarks with Mozilla account
+* Installed RoboForm Extension
+* De-hided toolbar bookmarks
+* Disabled 'Workspace only essential tabs'
 
 ---
 
