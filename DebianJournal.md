@@ -30,7 +30,7 @@
 
 * Chose **manual installation**
 * Selected SSD for installation
-* Created boot partition `/boot` (ext4, boot flag, 512MB)
+* Created boot partition `/boot` (ext4, boot flag, 1024MB (or more))
 * Created swap partition (swap type, swap flag, 8GB)
 * Created `/` partition (ext4, all remaining space)
 * Installed: Debian desktop environment + GNOME + basic system tools
@@ -89,7 +89,9 @@
 ## Accounts
 
 * Netflix (enabled DRM)
-* Google (unc.edu.ar)
+* Google (unc.edu.ar + gmail.com)
+* Github
+* Whatsapp
 
 ---
 ## Zen Browser Setup
@@ -103,12 +105,13 @@
 ---
 
 ## Flatpak Installation
-(i think this ones are optional, they installed flatpak but it wasnt showing up on the store, try only the last comand and see if it works)
+
 ```bash
 sudo apt install flatpak
+```
+```bash
 sudo apt-get --reinstall install -y gnome-software-plugin-flatpak
 ```
-last command
 ```bash
 sudo flatpak remote-add --if-not-exists flathub https://dl.flathub.org/repo/flathub.flatpakrepo
 ```
@@ -141,20 +144,9 @@ sudo flatpak remote-add --if-not-exists flathub https://dl.flathub.org/repo/flat
 
 ---
 
-## Driver Installation, Issues & Fixes
+## Nvidia video driver Installation
 
-* Installed NVIDIA drivers via Synaptic (`firmware-nvidia-gsp 550`) (OPTIONAL, its not confirmed that this is neccessary in any way)
-* Broke system trying `nvidia-smi` → fixed by purging NVIDIA, reinstalling Nouveau.
-  * How to purge nvidia and reinstall Nouveau video driver:
-  ```bash
-   # ENTER TERMINAL INSTANCE: CTRL + ALT + F3
-   sudo apt purge nvidia-smi
-   sudo apt remove --purge '^nvidia-.*'
-   sudo apt install xserver-xorg-video-nouveau
-   sudo dpkg-reconfigure xserver-xorg
-   sudo reboot
-  ```
-* Later used proper NVIDIA setup: (https://wiki.debian.org/NvidiaGraphicsDrivers#Debian_13_.22Trixie.22)
+* Use proper NVIDIA setup: (https://wiki.debian.org/NvidiaGraphicsDrivers#Debian_13_.22Trixie.22)
   * In case that you broke the system trying to install nvidia drivers before, do a cleanup with:
     ```bash
     sudo apt purge nvidia-* libnvidia-*
@@ -194,6 +186,31 @@ sudo flatpak remote-add --if-not-exists flathub https://dl.flathub.org/repo/flat
 * install with
 * sudo dpkg -i <name>.deb
 * then press enter twice for installing all missing dependencies
+
+### [Battle Net Installation through Steam](https://www.youtube.com/watch?v=wwT-VocQuKc)
+* Download .exe installer through battle net offical website
+* Go to steam library -> add non-steam game -> choose installer
+* Continue with the installation of the battle net launcher, make sure you install it in another drive so you can find it later, Z: is the linux disk, C: is a mounted folder in ~/.steam/steamapps/.../.../userdata/.../C/... (something like that), i created a "Blizzard" folder at ~ and installed it there.
+* Next, remove the installer from the steam library
+* add non-steam game -> choose Battle Net Launcher
+* Second click at Battle Net Launcher -> Compatibility Options -> Use LTS Proton
+* Now open the launcher as any steam "game" and install the games you want to play
+---
+
+## Extras
+### Driver problems
+* Installed NVIDIA drivers via Synaptic (`firmware-nvidia-gsp 550`) (OPTIONAL, its not confirmed that this is neccessary in any way)
+* Broke system trying `nvidia-smi` → fixed by purging NVIDIA, reinstalling Nouveau.
+  * How to purge nvidia and reinstall Nouveau video driver:
+  ```bash
+   # ENTER TERMINAL INSTANCE: CTRL + ALT + F3
+   sudo apt purge nvidia-smi
+   sudo apt remove --purge '^nvidia-.*'
+   sudo apt install xserver-xorg-video-nouveau
+   sudo dpkg-reconfigure xserver-xorg
+   sudo reboot
+  ```
+### Gaming setup
 ### Wine installation (https://gitlab.winehq.org/wine/wine/-/wikis/Debian-Ubuntu)
 ```bash
 sudo dpkg --add-architecture i386 
@@ -210,10 +227,10 @@ wget -q -O- https://download.opensuse.org/repositories/home:/strycore/Debian_12/
 sudo apt update
 sudo apt install lutris
 ```
-* In Case Lutris doesnt let you install BattleNet as i could not, set up ProtonPlus for Battle.net workaround (change wine and proton versions) (https://forums.lutris.net/t/last-battle-net-installer-not-working/23063) (https://www.reddit.com/r/cachyos/comments/1ke6tea/battlenet_via_lutris_failing_to_reinstall/)
+* In Case Lutris doesnt let you install BattleNet or other games as i could not, set up ProtonPlus for Battle.net workaround (change wine and proton versions) (https://forums.lutris.net/t/last-battle-net-installer-not-working/23063) (https://www.reddit.com/r/cachyos/comments/1ke6tea/battlenet_via_lutris_failing_to_reinstall/)
 * Or, you could install Battle Net through Steam (https://www.youtube.com/watch?v=wwT-VocQuKc)
 
----
+--
 
 ## Final Notes
 
