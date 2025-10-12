@@ -134,14 +134,51 @@ sudo flatpak remote-add --if-not-exists flathub https://dl.flathub.org/repo/flat
     fi
   ```
 
-### Installed Software
+### Installed Software through Software App
 
-* **Deb:** Thunderbird
+* **Deb:** Thunderbird, Xournal++
 * **Flatpak:** Discord, Telegram, Extension Manager
 * **GNOME Extensions:** Dash to Dock, Blur My Shell, Caffeine, Clipboard Indicator, Removable Drive Menu, Vitals, DING (Desktop Icons NG)
 * **Tweaks:** added minimize/maximize buttons
 * **Other:** Shortcut app, GParted, BalenaEtcher, gdisk, GIMP, Krita, Inkscape, KdenLive, OBS
 
+### Other installed software
+
+#### Git and ssh key for github
+
+* Install Git 
+```bash
+sudo apt install git
+```
+* Set up username and email
+```bash
+git config --global user.name "Facundo Sharry"
+git config --global user.email "facundo.sharry@gmail.com"
+```
+* Generate key
+```bash
+mkdir -p ~/.ssh/github
+ssh-keygen -t ed25519 -C "github-key" -f ~/.ssh/github/github-key
+```
+* Add ssh key to ssh agent
+```bash
+eval "$(ssh-agent -s)"
+ssh-add ~/.ssh/github/github-key
+```
+* Copy ssh public key
+```bash
+sudo apt install xclip
+cat ~/.ssh/github/github-key.pub | xclip -selection clipboard
+```
+* Add the ssh key in the github configuration "ssh keys" menu
+* Test if the connection is working
+```bash
+ssh -T git@github.com
+```
+* If so, set the ssh key as the default for every ssh operation
+```bash
+git config --global core.sshCommand "ssh -i ~/.ssh/github/github-key"
+```
 ---
 
 ## Nvidia video driver Installation
