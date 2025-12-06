@@ -70,13 +70,23 @@ java -jar SKLauncher-<version>.jar
 ```
 - To create a desktop shortcut, you can create a `.desktop` file in `~/.local/share/applications/` with the following content:
 ```ini
-echo "
-[Desktop Entry]
+echo "[Desktop Entry]
 Name=SKLauncher
 Comment=Minecraft Launcher
-Exec=java -jar /path/to/SKLauncher-<version>.jar
+Exec=java -jar /absolute/path/to/SKLauncher-<version>.jar
 Icon=/path/to/icon.png
 Terminal=false
 Type=Application
 Categories=Game;Entertainment;" > ~/.local/share/applications/sklauncher.desktop
+```
+
+- Make the desktop file executable:
+```bash 
+chmod +x ~/.local/share/applications/sklauncher.desktop
+``` 
+
+Confirm the launcher is valid
+- You can now launch SKLauncher from your application menu or by running the command:
+```bash
+gtk-launch sklauncher
 ```
