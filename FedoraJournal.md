@@ -349,4 +349,12 @@ sudo systemctl restart httpd
 sudo systemctl stop httpd
 sudo systemctl start httpd
 sudo systemctl status httpd
+
+```
+
+### System Upgrade
+```bash
+sudo dnf upgrade --refresh
+sudo dnf system-upgrade download --releasever=43
+sudo dnf5 offline reboot
 ```
