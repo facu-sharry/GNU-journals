@@ -144,6 +144,15 @@ sudo flatpak remote-add --if-not-exists flathub https://dl.flathub.org/repo/flat
 
 ### Other installed software
 
+#### npm and nvm
+```bash
+sudo apt install npm nvm
+```
+#### angular cli
+```bash
+sudo npm install -g  @angular/cli
+````
+
 #### Git and ssh key for github
 
 * Install Git 
