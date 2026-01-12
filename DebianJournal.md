@@ -30,8 +30,12 @@
 
 * Chose **manual installation**
 * Selected SSD for installation
-* Created boot partition `/boot` (ext4, boot flag, 1024MB (or more))
+* Created boot partition `/boot` (ext4, boot flag, 2048MB (or more))
 * Created swap partition (swap type, swap flag, 8GB)
+
+* Now, depending on your needs, create other partitions (like `/home`), or just go to next step
+* That depends if you are going to have many 'local' installation and user data, or if you are going to install things system wide and store data in other drives, in my case, i donw know how many installations im going to do or where they will be stored so i leave everything in `/`. Choosing `home` size accordingly is painful if you dont know your future needs, but is recommended in case system partition breaks and you dont want to lose personal data. 
+
 * Created `/` partition (ext4, all remaining space)
 * Installed: Debian desktop environment + GNOME + basic system tools
 
@@ -96,11 +100,12 @@
 ---
 ## Zen Browser Setup
 
-* Installed it through Flatpak in Software App
+* Installed it through Flatpak in Software App (if flatpak not yet installed see next step)
 * Logged in to sync bookmarks with Mozilla account
 * Installed RoboForm Extension
 * De-hided toolbar bookmarks
 * Disabled 'Workspace only essential tabs'
+* Enabled 'Ask where to save downloads'
 
 ---
 
@@ -133,6 +138,14 @@ sudo flatpak remote-add --if-not-exists flathub https://dl.flathub.org/repo/flat
         fastfetch
     fi
   ```
+
+### Before installing things:
+
+* Try installing everything first with sudo
+* That way, software will be shared between users and system wide
+* Only if not available, install through flatpak or other methods
+* Try using flatpak with the `--system` flag to install system wide
+* In the software app, choose 'for all users' when installing through flatpak
 
 ### Installed Software through Software App
 
@@ -241,6 +254,67 @@ git config --global core.sshCommand "ssh -i ~/.ssh/github/github-key"
 * add non-steam game -> choose Battle Net Launcher
 * Second click at Battle Net Launcher -> Compatibility Options -> Use LTS Proton
 * Now open the launcher as any steam "game" and install the games you want to play
+
+### SNES emulator installation
+* Install FCEUX (official repo)
+```bash
+sudo apt install fceux
+```
+* Verify installation
+```bash
+fceux --version
+fceux
+```
+### Set up ROMS
+* Create a folder for roms at ~/Games/ROMS/SNES
+```bash
+mkdir -p ~/Games/ROMS/SNES
+mkdir -p ~/Games/ROMS/NES
+```
+* Download roms from trusted sources
+* Open FCEUX, go to File -> Open ROM and select the rom you want to play
+
+### Sprite editor installation
+* Install Aseprite through github build
+* Clone Aseprite repo
+```bash
+git clone git@github.com:aseprite/aseprite.git
+cd aseprite
+git submodule update --init --recursive
+```
+* Extract the downloaded file
+* Install dependencies
+```bash
+sudo apt install cmake ninja-build
+sudo apt-get install libxcb1-dev
+sudo apt install \
+  python3 \
+  python-is-python3 \
+  build-essential \
+  cmake \
+  ninja-build \
+  clang \
+  libx11-dev \
+  libxcursor-dev \
+  libxi-dev \
+  libgl1-mesa-dev \
+  libfontconfig1-dev \
+  libxinerama-dev \
+  libxrandr-dev \
+  libgtk-3-dev \
+  libssl-dev \
+  libcurl4-openssl-dev \
+  zlib1g-dev
+```
+```bash
+* Build Aseprite
+```bash
+./build.sh
+```
+* Run Aseprite
+```bash
+./bin/aseprite
+```
 ---
 
 ## Extras
