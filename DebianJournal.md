@@ -50,6 +50,8 @@
 * Timezone: UTC-3
 * Nautilus preferences: “Sort folders before files”
 * Disabled mouse acceleration
+* Terminal -> Preferences -> profile -> Initial Terminal Size: 120 columns x 35 rows
+                                      -> Color scheme: GNOME
 
 ### Custom Shortcuts
 
@@ -57,6 +59,7 @@
 * `Ctrl + Alt + T` → GNOME Terminal
 * `Alt + WASD` → window resizing
 * `Super + D` → hide all windows
+* `Shift + Alt + AD` → move window to left/right monitor
 
 ### Personalization
 
@@ -146,6 +149,9 @@ sudo flatpak remote-add --if-not-exists flathub https://dl.flathub.org/repo/flat
 * Only if not available, install through flatpak or other methods
 * Try using flatpak with the `--system` flag to install system wide
 * In the software app, choose 'for all users' when installing through flatpak
+* In case of appimages, create a folder at `/opt/appimages` and place them there with proper permissions
+* In case of compiling from source, install to `/usr/local` instead of home folder
+* desktop files should be placed at `/usr/share/applications` for system wide availability instead of `~/.local/share/applications`
 
 ### Installed Software through Software App
 
@@ -255,6 +261,47 @@ git config --global core.sshCommand "ssh -i ~/.ssh/github/github-key"
 * Second click at Battle Net Launcher -> Compatibility Options -> Use LTS Proton
 * Now open the launcher as any steam "game" and install the games you want to play
 
+### RetroArch (All in one emulator) installation
+* Install using flatpak
+```bash
+flatpak remote-add --user --if-not-exists flathub https://flathub.org/repo/flathub.flatpakrepo
+sudo flatpak install org.libretro.RetroArch
+```
+* You can finde the desktop icon in
+  * /var/lib/flatpak/exports/share/applications/org.libretro.RetroArch.desktop
+  * Copy it to ~/Desktop if you want a desktop icon
+* or 
+* Install using debian's official packages
+```bash
+sudo apt install retroarch
+```
+* Verify installation
+```bash
+retroarch --version
+retroarch
+```
+* Set up ROMS
+* Create a folder for roms at ~/Games/ROMS/
+```bashmkdir -p ~/Games/ROMS/RetroArch
+```
+* Download roms from trusted sources
+* Open RetroArch, go to Load Content -> Select File And Detect Core -> select the rom you want to play
+
+* Enable RetroAchievements
+  * Go to Settings -> Achievements -> Enable RetroAchievements
+  * Create an account at https://retroachievements.org/
+  * Go to Settings -> Achievements -> Set your username and password
+  * Restart RetroArch
+
+* Since cores are not available by debian official packages guidelines, install them through apt: (example of some cores)
+```bash
+sudo apt install retroarch \
+  libretro-nestopia \
+  libretro-snes9x \
+  libretro-mgba \
+  libretro-fceumm
+```
+* Enjoy!
 ### SNES emulator installation
 * Install FCEUX (official repo)
 ```bash
