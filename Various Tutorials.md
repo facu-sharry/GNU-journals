@@ -105,6 +105,7 @@ eden-emulator
     - https://fmhy.net/gaming#nintendo-roms
     - https://taodung.com/
     - https://switchroms.io/
+    - https://t.me/NSW_TorrentLibrary
 
 ### If downloading nsz compressed files, do this to decompress ->
 * Go to ~ and install nsz
