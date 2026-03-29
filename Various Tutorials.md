@@ -108,6 +108,7 @@ eden-emulator
     - https://t.me/NSW_TorrentLibrary
 
 ### If downloading nsz compressed files, do this to decompress ->
+
 * Go to ~ and install nsz
 `sudo apt update`
 `sudo apt install python3 python3-pip git`
@@ -124,3 +125,37 @@ eden-emulator
 `nsz -D \<path-to-nsz-file\>`
 * When done, deactivate virtual enviroment
 `deactivate`
+
+### Installing mods
+
+* Download a mod from the source of choice
+
+* Mods come in various formats, but they always contain folders like `romfs`, `exefs`, `sdmc`, etc. These folders need to be merged with the corresponding folders in the game directory.
+
+* For example: if you dowload 60fpsMOD for BotW, you will get a folder with `romfs` and `exefs` folders. You need to copy this mod folder, go to the 'mods' folder of the game, and paste it there. Then, when you launch the game with Eden, it will load the mod files from the 'mods' folder and apply them to the game.
+
+* The final directory would look like this:
+
+```~/.local/share/eden/
+├── keys/
+│   └── prod.keys
+├── nand/
+│   └── system/
+│       └── Contents/
+│           └── registered/
+├── cache/
+├── logs/
+├── config/
+└── load/
+    └── <game-id>/
+        └── <mod-name>/
+            ├── romfs/
+            ├── exefs/
+            └── sdmc/
+    └── <game-id>/
+        └── <mod-name>/
+            ├── romfs/
+            ├── exefs/
+            └── sdmc/
+    ...
+```
