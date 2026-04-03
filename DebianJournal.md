@@ -397,11 +397,33 @@ sudo apt install lutris
 * In Case Lutris doesnt let you install BattleNet or other games as i could not, set up ProtonPlus for Battle.net workaround (change wine and proton versions) (https://forums.lutris.net/t/last-battle-net-installer-not-working/23063) (https://www.reddit.com/r/cachyos/comments/1ke6tea/battlenet_via_lutris_failing_to_reinstall/)
 * Or, you could install Battle Net through Steam (https://www.youtube.com/watch?v=wwT-VocQuKc)
 
+### Audio Problems
+
+- I had an issue where the microphone of all my headsets stopped working only in my girlfriends profile, i tried many debugging things to understand why only the microphone but they reached nowhere, in the end, removing all the configuration and cache of pipewire and sound driver things fixed it, when i reconnected the headset it detected the microphone, i will keep this note if it happens again in the future.
+
+- Reset audio config
+
+- Do This :
+
+```bash
+systemctl --user stop pipewire pipewire-pulse wireplumber
+rm -rf ~/.config/{pipewire,wireplumber,pulse}
+rm -rf ~/.local/state/{pipewire,wireplumber}
+rm -rf ~/.cache/wireplumber
+systemctl --user daemon-reexec
+systemctl --user start pipewire pipewire-pulse wireplumber
+```
+
+- Later:
+  * Unplug the Headset
+  * Restart your PC
+  * Plug the headset once the system has booted
+
 --
 
 ## Final Notes
 
-* In case of dual boot and your 2nd system not beign read, run `sudo update-grub`
+* In case of dual boot and your 2nd system not being read, run `sudo update-grub`
 * Avoid blindly installing NVIDIA drivers without checking Debian Wiki
 
 ---
