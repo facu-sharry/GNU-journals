@@ -34,7 +34,9 @@
 * Created swap partition (swap type, swap flag, 8GB)
 
 * Now, depending on your needs, create other partitions (like `/home`), or just go to next step
-* That depends if you are going to have many 'local' installation and user data, or if you are going to install things system wide and store data in other drives, in my case, i donw know how many installations im going to do or where they will be stored so i leave everything in `/`. Choosing `home` size accordingly is painful if you dont know your future needs, but is recommended in case system partition breaks and you dont want to lose personal data. 
+* That depends if you are going to have many 'local' installation and user data, or if you are going to install things system wide and store data in other drives, in my case, i dont know how many installations im going to do or where they will be stored so i leave everything in `/`. Choosing `home` size accordingly is painful if you dont know your future needs, but is recommended in case system partition breaks and you dont want to lose personal data. 
+
+  * (*Next time*: use btrfs instead of ext4, it solves the problem of resizing partitions in the future, and also has many other benefits like snapshots, compression, etc)
 
 * Created `/` partition (ext4, all remaining space)
 * Installed: Debian desktop environment + GNOME + basic system tools
