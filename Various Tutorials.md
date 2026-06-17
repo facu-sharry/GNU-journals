@@ -178,3 +178,18 @@ sudo apt update && sudo apt install signal-desktop
 ## To Do
 
 - fix grub not detecting windows on boot
+
+### Ran the os-prober command and it detected windows
+``` sudo os-prober ```
+``` sudo update-grub ```
+
+### Next you have to add the following lines to /etc/default/grub
+``` GRUB_DISABLE_OS_PROBER=false ```
+
+### And maybe run again the os-prober and update-grub commands and reboot the system
+``` sudo os-prober ```
+``` sudo update-grub ```
+
+## Faugus Launcher
+
+### Just installed Faugus Launcher from software app (flatpak)
