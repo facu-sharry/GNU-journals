@@ -284,10 +284,26 @@ retroarch
 ```
 * Set up ROMS
 * Create a folder for roms at ~/Games/ROMS/
-```bashmkdir -p ~/Games/ROMS/RetroArch
+```bash
+mkdir -p ~/Games/ROMS/RetroArch
 ```
 * Download roms from trusted sources
-* Open RetroArch, go to Load Content -> Select File And Detect Core -> select the rom you want to play
+* Open RetroArch, go to Load Core -> Download Core and download the following (recommended) cores:
+  * MAME (Arcade)
+  * mGBA (Game Boy Advance)
+  * Citra (Nintendo 3DS)
+  * Melon DS (Nintendo DS)
+  * Dolphin (Nintendo GameCube and Wii)
+  * Mesen (Nintendo Entertainment System - NES / Famicom)
+  * Mupen64Plus (Nintendo 64)
+  * Snes9x (Super Nintendo Entertainment System - SNES / Super Famicom)
+  * PCSX Rearmed (PlayStation 1)
+  * LRPS2 (PlayStation 2)
+
+* Now go to Load Content -> Select File and navigate to the roms you downloaded, select the rom and enjoy!
+* You probably need to go to Import Content -> Manual Scan and select the folder where you have your roms to have them appear in the main menu with all the metadata and cover arts, etc.
+
+* Set up custom settings like input configuration, etc.
 
 * Enable RetroAchievements
   * Go to Settings -> Achievements -> Enable RetroAchievements
