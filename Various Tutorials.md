@@ -193,3 +193,22 @@ sudo apt update && sudo apt install signal-desktop
 ## Faugus Launcher
 
 ### Just installed Faugus Launcher from software app (flatpak)
+
+## Stremio
+
+### Stremio installed through the software store (flatpak) fails to connect to NVIDIA drivers
+
+### Stremio installed through .deb package fails to install due to needing all of these packages:
+
+libmpv1 qml-module-qt-labs-platform qml-module-qtquick-controls qml-module-qtquick-dialogs qml-module-qtwebchannel qml-module-qtwebengine qml-module-qt-labs-folderlistmodel qml-module-qt-labs-settings libfdk-aac2
+
+I installed them through sudo apt install but libmpv1 is not present on DEBIAN 13, instead, libmpv2 exists so:
+
+When installing all the dependencies, libmpv2 included, the deb fails to launch cause its configured to NEED libmpv1
+
+The solution was in an issue on github: https://github.com/Stremio/stremio-shell/issues/393#issuecomment-2681216548
+
+Apparently you have to re-package the deb file, touching HEX code, luckly this guy has a script for it (for ubuntu 24) but it works on debian 13 too
+
+Run the script and it installed with no problem.
+
