@@ -49,6 +49,14 @@ You can manually configure Proton VPN on Linux using:
 
 After following the first tutorial i got it working, just run the app, login and it works
 
+#### Configure qbitorrent to use Proton VPN
+
+First, select any server from the Proton VPN app that contains the P2P label, then click on the "Connect" button. After that, open qbittorrent and go to Tools > Options > Advanced and select the network interface that corresponds to the Proton VPN connection. This will ensure that all torrent traffic is routed through the VPN.
+
+If you doubt is working use https://whatismyipaddress.com/ and https://ipleak.net/ to check.
+
+Also you need to configure protonvpn to use port forwarding, since qbittorrent needs it to work properly, you can find the instructions [here](https://protonvpn.com/support/port-forwarding#linux)
+
 ### Proton Drive
 
 To this date (10/8/2026) there is not an official Proton Drive app for Linux, there is currently 3 ways of using Proton Drive on Linux:
