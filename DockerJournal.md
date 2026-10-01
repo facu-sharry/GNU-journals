@@ -57,7 +57,7 @@ docker run hello-world
 
 ### Concepts
 
-#### 1st DockerFile
+#### 1 DockerFile
 > A DockerFile is the recipe for creating a docker image. Its used to define *your application's* OS/enviroment, dependencies, files to copy into the image, what commands to run when the container starts, env variables, ports and other settings . It will and can use other sources like 'node', 'ubuntu', etc and you will write things like when and where you want to run npm run build, etc.
 
 * Core Dockerfile Syntax
@@ -74,7 +74,8 @@ docker run hello-world
 | CMD			| Default command to run when container starts			| CMD ["apache2ctl", "-D", "FOREGROUND"]
 | ENTRYPOINT	| Alternative to CMD; harder to override				| ENTRYPOINT ["python", "app.py"]
 
-- Basic Dockerfile example: 
+* Basic Dockerfile example:
+
 ```Dockerfile
 # Start from official Ubuntu with Apache pre-installed
 FROM ubuntu:22.04
@@ -108,7 +109,108 @@ CMD ["apache2ctl", "-D", "FOREGROUND"]
 
 ```
 
-#### 2nd Docker Image
+* Efficient Dockerfile Practices
+
+1. Layer Caching — Order Matters
+
+Dockerfile creates a layer for each instruction. Docker caches layers; if nothing changed, it reuses the cache.
+
+Inefficient:
+
+```dockerfile
+
+FROM ubuntu:22.04
+COPY ./myapp/ /var/www/html/
+RUN apt-get update && apt-get install -y apache2
+
+# Problem: If you change one file in myapp/, the COPY layer rebuilds and invalidates the RUN cache, forcing a full reinstall.
+```
+
+Efficient:
+
+```dockerfile
+
+FROM ubuntu:22.04
+RUN apt-get update && apt-get install -y apache2
+COPY ./myapp/ /var/www/html/
+
+# Benefit: Dependencies install once. Code changes only rebuild the COPY layer.
+```
+
+2. Minimize Image Size
+
+```dockerfile
+
+# Bad: Creates bloated images
+FROM ubuntu:22.04
+RUN apt-get update && apt-get install -y apache2
+RUN apt-get install -y curl
+RUN apt-get install -y git
+
+# Good: Combine RUN commands, clean up package cache
+FROM alpine:3.18  # Much smaller base image
+RUN apk add --no-cache apache2 curl git
+
+# Or on Ubuntu:
+RUN apt-get update && apt-get install -y \
+    apache2 \
+    curl \
+    git \
+    && rm -rf /var/lib/apt/lists/*
+```
+
+Why? Each RUN creates a layer. Combining them reduces layers and size. rm -rf /var/lib/apt/lists/* removes cached package data.
+
+3. Use Multi-Stage Builds (For Compiled Apps)
+
+```dockerfile
+
+# Stage 1: Build
+FROM golang:1.21 AS builder
+WORKDIR /app
+COPY . .
+RUN go build -o myapp .
+
+# Stage 2: Runtime (much smaller)
+FROM alpine:3.18
+COPY --from=builder /app/myapp /usr/local/bin/
+EXPOSE 8080
+CMD ["myapp"]
+```
+
+Benefit: Final image contains only the compiled binary, not the entire Go toolchain.
+
+4. Use .dockerignore
+
+```
+# .dockerignore file (like .gitignore)
+.git
+.env
+node_modules
+__pycache__
+*.log
+```
+
+Prevents unnecessary files from being copied, reducing build time and image size.
+
+5. Avoid Running as Root
+
+```dockerfile
+
+FROM ubuntu:22.04
+RUN apt-get update && apt-get install -y apache2
+
+# Create non-root user
+RUN useradd -m -s /bin/bash appuser
+USER appuser
+
+CMD ["apache2ctl", "-D", "FOREGROUND"]
+```
+
+(Note: Apache specifically often needs root for port 80, but principle applies elsewhere.)
+
+#### 2. Docker Image
+
 > Docker images are a lightweight, standalone, executable package of software that includes everything needed to run an application: code, runtime, system tools, system libraries and settings. Think of them like a frozen snapshot or a class definition in programming.
 
 - ex:
