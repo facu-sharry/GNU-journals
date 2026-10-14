@@ -20,18 +20,6 @@ sudo whoami
 
 ### Updated system with `sudo apt update && sudo apt upgrade -y`
 
-### Stuck on apt upgrade
-- Check any repository issues with, (for example for the deb repository):
-```bash
-ping -c 4 deb.debian.org
-```
-- If you have a problem with the repository, you can change it in `/etc/apt/sources.list` to a different mirror, for example:
-```
-deb http://ftp.debian.org/debian/ bookworm main contrib non-free
-deb http://ftp.debian.org/debian/ bookworm-updates main contrib non-free
-deb http://security.debian.org/debian-security bookworm-security main contrib non-free
-```
-
 ### SSH Configuration
 - Installed OpenSSH Server with `sudo apt install openssh-server`
 - Enabled SSH service with `sudo systemctl enable ssh`
@@ -86,3 +74,52 @@ detected_sensor_module_name
 - sudo smartctl -a /dev/sda
 
 ### Install fastfetch
+
+
+
+### Extras:
+
+### Stuck on apt upgrade
+- Check any repository issues with, (for example for the deb repository):
+```bash
+ping -c 4 deb.debian.org
+```
+- If you have a problem with the repository, you can change it in `/etc/apt/sources.list` to a different mirror, for example:
+```
+deb http://ftp.debian.org/debian/ bookworm main contrib non-free
+deb http://ftp.debian.org/debian/ bookworm-updates main contrib non-free
+deb http://security.debian.org/debian-security bookworm-security main contrib non-free
+```
+
+> The problem ended up being a DNS or network issue, so i had to restart the network service with `sudo systemctl restart networking` and then run `sudo apt update && sudo apt upgrade -y` again. This eventually breaks again, so for now we keep troubleshooting till we find the root cause.
+
+- Trying to fix it by connecting a wifi adapter.
+
+> First thing i see when connecting it it says "failed to load firmware".
+
+> fix commands:
+
+```lsusb```
+```sudo dmesg -T | grep -iE 'firmware|wlan|wifi|rtl|mt76|ath'```
+
+> Given the output of the previous command, i can see that the wifi adapter is a Realtek device, so i need to install the firmware-realtek package. If other devices are used, you may need to install the corresponding firmware package.
+
+```sudo apt update```
+
+``` sudo apt install firmware-realtek ```
+
+> Connect and reconnect the wifi adapter, then check with `sudo dmesg -T | grep -iE 'firmware|wlan|wifi|rtl|mt76|ath'` to see if it loads the firmware correctly.
+
+> Next, check if the wifi interface is up with `ip addr`.
+
+> Edit the /etc/network/interfaces file to add the wifi interface configuration. (or just follor the Network Configuration section below)
+
+> If both the old and new interfaces are UP, then you can bring down the old one with:
+
+```sudo ip addr flush dev <old-interface>```
+```sudo ip link set <old-interface> down```
+
+> Then, restart networking service and reboot to make sure the changes persist and the system is stable.
+
+```ip route show``` should 
+
