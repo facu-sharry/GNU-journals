@@ -75,6 +75,19 @@ detected_sensor_module_name
 
 ### Install fastfetch
 
+* Installed essentials with apt: `fastfetch`, `curl`
+* Added fastfetch at every terminal
+  ```bash
+    nano ~/.bashrc
+
+    # add the following lines
+
+    if [ "$TERM_PROGRAM" != "future_program_we_want_to_ignore" ]; then
+        fastfetch
+    fi
+  ```
+
+
 
 
 ### Extras:
@@ -121,5 +134,4 @@ deb http://security.debian.org/debian-security bookworm-security main contrib no
 
 > Then, restart networking service and reboot to make sure the changes persist and the system is stable.
 
-```ip route show``` should 
-
+```ip route show``` should show the default route through the new wifi interface.
