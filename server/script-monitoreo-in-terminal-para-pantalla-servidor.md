@@ -184,35 +184,46 @@ Rellena estos bloques con las rutas y programas específicos de cada máquina.
 ### Web
 ```bash
 # Ventana 0: btop (ya existe por new-session -n "btop")
-tmux send-keys -t "$SESSION:0" "btop" Enter
+tmux_cmd send-keys -t "$SESSION:0" "btop" Enter
 
-# Ventana 1: journalctl
-tmux new-window -t "$SESSION" -n "journalctl"
-tmux send-keys -t "$SESSION:1" "journalctl -f -n 500 | ccze -A" Enter
+tmux_cmd new-window -t "$SESSION" -n "journalctl"
+tmux_cmd send-keys -t "$SESSION:1" "journalctl -f -n 500 | ccze -A -o lookups=off" Enter
 
-# Ventana 2: apache access
-tmux new-window -t "$SESSION" -n "apache access"
-tmux send-keys -t "$SESSION:2" "tail -f -n 500 /var/log/httpd/access.log | ccze -A" Enter
+tmux_cmd new-window -t "$SESSION" -n "apache access"
+tmux_cmd send-keys -t "$SESSION:2" "tail -f -n 500 /var/log/httpd/access_log | ccze -A -o lookups=off" Enter
 
-# Ventana 3: apache errors
-tmux new-window -t "$SESSION" -n "apache errors"
-tmux send-keys -t "$SESSION:3" "tail -f /var/log/httpd/www.error.log | ccze -A" Enter
+tmux_cmd new-window -t "$SESSION" -n "apache errors"
+tmux_cmd send-keys -t "$SESSION:3" "tail -f -n 500 /var/log/httpd/error_log | ccze -A -o lookups=off" Enter
 
-# Ventana 4: php errors
-tmux new-window -t "$SESSION" -n "php errors"
-tmux send-keys -t "$SESSION:4" "tail -f -n 500 /var/log/php-fpm/www.error.log | ccze -A" Enter
+tmux_cmd new-window -t "$SESSION" -n "php"
+tmux_cmd send-keys -t "$SESSION:4" "tail -f -n 500 /var/log/php-fpm/www-error.log | ccze -A -o lookups=off" Enter
 
-# Ventana 5: auth (Fedora)
-tmux new-window -t "$SESSION" -n "ssh errors"
-tmux send-keys -t "$SESSION:5" "sudo tail -f /var/log/secure | ccze -A" Enter
+tmux_cmd new-window -t "$SESSION" -n "HC"
+tmux_cmd send-keys -t "$SESSION:5" "tail -f -n 500 /var/log/php-fpm/hc-error.log | ccze -A -o lookups=off" Enter
 
-# Ventana 6: puertos web + minecraft
-tmux new-window -t "$SESSION" -n "puertos"
-tmux send-keys -t "$SESSION:6" "watch -n 2 'ss -tlnp | grep -E \":(80|443|25565)\"'" Enter
+tmux_cmd new-window -t "$SESSION" -n "HC slows"
+tmux_cmd send-keys -t "$SESSION:6" "tail -f -n 500 /var/log/php-fpm/hc-slow.log | ccze -A -o lookups=off" Enter
 
-# Ventana 7: nethogs
-tmux new-window -t "$SESSION" -n "nethogs"
-tmux send-keys -t "$SESSION:7" "sudo nethogs -b | ccze -A" Enter
+tmux_cmd new-window -t "$SESSION" -n "Turnero"
+tmux_cmd send-keys -t "$SESSION:7" "tail -f -n 500 /var/log/php-fpm/turnos-error.log | ccze -A -o lookups=off" Enter
+
+tmux_cmd new-window -t "$SESSION" -n "Turnero slows"
+tmux_cmd send-keys -t "$SESSION:8" "tail -f -n 500 /var/log/php-fpm/turnos-slow.log | ccze -A -o lookups=off" Enter
+
+tmux_cmd new-window -t "$SESSION" -n "php-fpm"
+tmux_cmd send-keys -t "$SESSION:9" "ps aux | grep 'php-fpm: pool' | grep -oP 'pool \K[^ ]+' | sort | uniq -c | sort -nr | ccze -A -o lookups=off" Enter
+
+tmux_cmd new-window -t "$SESSION" -n "ssh errors"
+tmux_cmd send-keys -t "$SESSION:10" "sudo tail -f -n 500 /var/log/secure | ccze -A -o lookups=off" Enter
+
+tmux_cmd new-window -t "$SESSION" -n "puertos"
+tmux_cmd send-keys -t "$SESSION:11" "ss -tlnp | ccze -A -o lookups=off" Enter
+
+tmux_cmd new-window -t "$SESSION" -n "disk"
+tmux_cmd send-keys -t "$SESSION:12" "duf" Enter
+
+tmux_cmd new-window -t "$SESSION" -n "nethogs"
+tmux_cmd send-keys -t "$SESSION:13" "sudo nethogs -b" Enter
 ```
 
 ### Web 2
