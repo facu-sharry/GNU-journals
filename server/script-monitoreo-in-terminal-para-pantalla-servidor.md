@@ -262,7 +262,29 @@ tmux_cmd send-keys -t "$SESSION:7" "sudo nethogs -b" Enter
 
 ### Ubuntu DataStorage (Hipervisor)
 ```bash
-# (Comandos de instalación y bloque de send-keys específico)
+# Ventana 0: btop (ya existe por new-session -n "btop")
+tmux_cmd send-keys -t "$SESSION:0" "btop" Enter
+
+tmux_cmd new-window -t "$SESSION" -n "journalctl"
+tmux_cmd send-keys -t "$SESSION:1" "journalctl -f -n 500 | ccze -A -o lookups=off" Enter
+
+tmux_cmd new-window -t "$SESSION" -n "VM List"
+tmux_cmd send-keys -t "$SESSION:2" "watch -d -n 2 --color 'VBoxManage list runningvms'" Enter
+
+tmux_cmd new-window -t "$SESSION" -n "VM Info"
+tmux_cmd send-keys -t "$SESSION:3" "watch -d -n 2 --color '/usr/local/bin/vbox-vms.sh | ccze -A'" Enter
+
+tmux_cmd new-window -t "$SESSION" -n "puertos"
+tmux_cmd send-keys -t "$SESSION:4" "watch -d -n 2 --color 'ss -tlnp | ccze -A -o lookups=off'" Enter
+
+tmux_cmd new-window -t "$SESSION" -n "ssh"
+tmux_cmd send-keys -t "$SESSION:5" "tail -f /var/log/auth.log | ccze -A -o lookups=off" Enter
+
+tmux_cmd new-window -t "$SESSION" -n "disk"
+tmux_cmd send-keys -t "$SESSION:6" "watch -d -n 2 -c 'CLICOLOR_FORCE=1 duf'" Enter
+
+tmux_cmd new-window -t "$SESSION" -n "nethogs"
+tmux_cmd send-keys -t "$SESSION:7" "sudo nethogs -b" Enter
 ```
 
 ### DNS
