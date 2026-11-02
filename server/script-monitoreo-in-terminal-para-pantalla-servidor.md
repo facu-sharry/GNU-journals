@@ -247,17 +247,23 @@ tmux_cmd send-keys -t "$SESSION:3" "tail -f -n 500 /var/log/httpd/error_log | cc
 tmux_cmd new-window -t "$SESSION" -n "php errors"
 tmux_cmd send-keys -t "$SESSION:4" "tail -f -n 500 /var/log/php-fpm/www-error.log | ccze -A -o lookups=off" Enter
 
+tmux_cmd new-window -t "$SESSION" -n "php-fpm"
+tmux_cmd send-keys -t "$SESSION:5" "watch -d -n 2 --color \"ps aux | grep 'php-fpm: pool' | grep -oP 'pool \K[^ ]+' | sort | uniq -c | sort -nr | ccze -A -o lookups=off\"" Enter
+
 # Ventana 5: auth (Fedora)
 tmux_cmd new-window -t "$SESSION" -n "ssh errors"
-tmux_cmd send-keys -t "$SESSION:5" "sudo tail -f -n 500 /var/log/secure | ccze -A -o lookups=off" Enter
+tmux_cmd send-keys -t "$SESSION:6" "sudo tail -f -n 500 /var/log/secure | ccze -A -o lookups=off" Enter
 
 # Ventana 6: puertos
 tmux_cmd new-window -t "$SESSION" -n "puertos"
-tmux_cmd send-keys -t "$SESSION:6" "ss -tlnp | ccze -A -o lookups=off" Enter
+tmux_cmd send-keys -t "$SESSION:7" "watch -d -n 2 --color 'ss -tlnp | ccze -A -o lookups=off'" Enter
+
+tmux_cmd new-window -t "$SESSION" -n "disk"
+tmux_cmd send-keys -t "$SESSION:8" "watch -d -n 2 -c 'CLICOLOR_FORCE=1 duf'" Enter
 
 # Ventana 7: nethogs
 tmux_cmd new-window -t "$SESSION" -n "nethogs"
-tmux_cmd send-keys -t "$SESSION:7" "sudo nethogs -b" Enter
+tmux_cmd send-keys -t "$SESSION:9" "sudo nethogs -b" Enter
 ```
 
 ### Ubuntu DataStorage (Hipervisor)
