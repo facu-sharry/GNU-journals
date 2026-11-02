@@ -211,16 +211,16 @@ tmux_cmd new-window -t "$SESSION" -n "Turnero slows"
 tmux_cmd send-keys -t "$SESSION:8" "tail -f -n 500 /var/log/php-fpm/turnos-slow.log | ccze -A -o lookups=off" Enter
 
 tmux_cmd new-window -t "$SESSION" -n "php-fpm"
-tmux_cmd send-keys -t "$SESSION:9" "ps aux | grep 'php-fpm: pool' | grep -oP 'pool \K[^ ]+' | sort | uniq -c | sort -nr | ccze -A -o lookups=off" Enter
+tmux_cmd send-keys -t "$SESSION:9" "watch -d -n 2 --color \"ps aux | grep 'php-fpm: pool' | grep -oP 'pool \K[^ ]+' | sort | uniq -c | sort -nr | ccze -A -o lookups=off\"" Enter
 
 tmux_cmd new-window -t "$SESSION" -n "ssh errors"
 tmux_cmd send-keys -t "$SESSION:10" "sudo tail -f -n 500 /var/log/secure | ccze -A -o lookups=off" Enter
 
 tmux_cmd new-window -t "$SESSION" -n "puertos"
-tmux_cmd send-keys -t "$SESSION:11" "ss -tlnp | ccze -A -o lookups=off" Enter
+tmux_cmd send-keys -t "$SESSION:11" "watch -d -n 2 --color 'ss -tlnp | ccze -A -o lookups=off'" Enter
 
 tmux_cmd new-window -t "$SESSION" -n "disk"
-tmux_cmd send-keys -t "$SESSION:12" "duf" Enter
+tmux_cmd send-keys -t "$SESSION:12" "watch -d -n 2 -c 'CLICOLOR_FORCE=1 duf'" Enter
 
 tmux_cmd new-window -t "$SESSION" -n "nethogs"
 tmux_cmd send-keys -t "$SESSION:13" "sudo nethogs -b" Enter
