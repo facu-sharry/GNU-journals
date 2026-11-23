@@ -444,4 +444,8 @@ systemctl --user start pipewire pipewire-pulse wireplumber
 * In case of dual boot and your 2nd system not being read, run `sudo update-grub`
 * Avoid blindly installing NVIDIA drivers without checking Debian Wiki
 
+### Low space disk in /boot partition -> run sudo apt autoremove to remove old kernel versions
+
+### High space usage in /var/cache/apt ? run sudo apt clean
+
 ---
