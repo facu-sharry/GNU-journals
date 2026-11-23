@@ -99,29 +99,17 @@ tmux_cmd send-keys -t "$SESSION:0" "btop" Enter
 tmux_cmd new-window -t "$SESSION" -n "journalctl"
 tmux_cmd send-keys -t "$SESSION:1" "journalctl -f -n 500 | ccze -A -o lookups=off" Enter
 
-# Ventana 2: apache access
-tmux_cmd new-window -t "$SESSION" -n "apache access"
-tmux_cmd send-keys -t "$SESSION:2" "tail -f -n 500 /var/log/httpd/access_log | ccze -A -o lookups=off" Enter
-
-# Ventana 3: apache errors
-tmux_cmd new-window -t "$SESSION" -n "apache errors"
-tmux_cmd send-keys -t "$SESSION:3" "tail -f /var/log/httpd/error_log | ccze -A -o lookups=off" Enter
-
-# Ventana 4: php errors
-tmux_cmd new-window -t "$SESSION" -n "php errors"
-tmux_cmd send-keys -t "$SESSION:4" "tail -f -n 500 /var/log/php-fpm/www-error.log | ccze -A -o lookups=off" Enter
-
-# Ventana 5: auth (Fedora)
-tmux_cmd new-window -t "$SESSION" -n "ssh errors"
-tmux_cmd send-keys -t "$SESSION:5" "sudo tail -f /var/log/secure | ccze -A -o lookups=off" Enter
+# Ventana 2: duf
+tmux_cmd new-window -t "$SESSION" -n "duf"
+tmux_cmd send-keys -t "$SESSION:2" "duf" Enter
 
 # Ventana 6: puertos
 tmux_cmd new-window -t "$SESSION" -n "puertos"
-tmux_cmd send-keys -t "$SESSION:6" "ss -tlnp | ccze -A -o lookups=off" Enter
+tmux_cmd send-keys -t "$SESSION:3" "ss -tlnp | ccze -A -o lookups=off" Enter
 
 # Ventana 7: nethogs
 tmux_cmd new-window -t "$SESSION" -n "nethogs"
-tmux_cmd send-keys -t "$SESSION:7" "sudo nethogs -b" Enter
+tmux_cmd send-keys -t "$SESSION:4" "sudo nethogs -b" Enter
 
 # 4) Seleccionar ventana 0
 tmux_cmd select-window -t "$SESSION:0"
