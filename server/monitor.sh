@@ -131,6 +131,7 @@ CYCLE_PID=$!
 # 6) Adjuntar
 tmux_cmd attach-session -t "$SESSION"
 
+tmux_cmd kill-session -t "$SESSION" 2>/dev/null
 kill "$CYCLE_PID" 2>/dev/null
 
 # Preguntar antes de borrar el directorio de estado
