@@ -147,6 +147,17 @@ El prefix está configurado como **`Ctrl+B`**.
 | Cerrar sesión | `Ctrl+B`, `Q` |
 | Listar comandos (ayuda) | `Ctrl+B`, `?` |
 
+### Comandos de utilidad
+
+ps aux | grep tmux
+> Muestra los procesos de tmux activos.
+
+ps -eo pid,ppid,stat,%cpu,cmd | grep -E '[c]cze|[t]ail -f|[j]ournalctl -f|[w]atch'
+> Muestra los procesos de monitoreo activos (ccze, tail, journalctl, watch).
+
+pkill -f tmux
+> Mata todos los procesos de tmux activos.
+
 ### Modo Copia (Scroll y Búsqueda)
 
 Como el prefix es `Ctrl+B`, la secuencia es:
@@ -187,10 +198,10 @@ Rellena estos bloques con las rutas y programas específicos de cada máquina.
 tmux_cmd send-keys -t "$SESSION:0" "btop" Enter
 
 tmux_cmd new-window -t "$SESSION" -n "journalctl"
-tmux_cmd send-keys -t "$SESSION:1" "journalctl -f -n 500 | ccze -A -o lookups=off" Enter
+tmux_cmd send-keys -t "$SESSION:1" "journalctl -f -n 500" Enter
 
 tmux_cmd new-window -t "$SESSION" -n "apache access"
-tmux_cmd send-keys -t "$SESSION:2" "tail -f -n 500 /var/log/httpd/access_log | ccze -A -o lookups=off" Enter
+tmux_cmd send-keys -t "$SESSION:2" "tail -f -n 500 /var/log/httpd/access_log" Enter
 
 tmux_cmd new-window -t "$SESSION" -n "apache errors"
 tmux_cmd send-keys -t "$SESSION:3" "tail -f -n 500 /var/log/httpd/error_log | ccze -A -o lookups=off" Enter
@@ -211,19 +222,19 @@ tmux_cmd new-window -t "$SESSION" -n "Turnero slows"
 tmux_cmd send-keys -t "$SESSION:8" "tail -f -n 500 /var/log/php-fpm/turnos-slow.log | ccze -A -o lookups=off" Enter
 
 tmux_cmd new-window -t "$SESSION" -n "php-fpm"
-tmux_cmd send-keys -t "$SESSION:9" "watch -d -n 2 --color \"ps aux | grep 'php-fpm: pool' | grep -oP 'pool \K[^ ]+' | sort | uniq -c | sort -nr | ccze -A -o lookups=off\"" Enter
+tmux_cmd send-keys -t "$SESSION:9" "watch -d -n 4 --color \"ps aux | grep 'php-fpm: pool' | grep -oP 'pool \K[^ ]+' | sort | uniq -c | sort -nr\"" Enter
 
 tmux_cmd new-window -t "$SESSION" -n "ssh errors"
 tmux_cmd send-keys -t "$SESSION:10" "sudo tail -f -n 500 /var/log/secure | ccze -A -o lookups=off" Enter
 
 tmux_cmd new-window -t "$SESSION" -n "puertos"
-tmux_cmd send-keys -t "$SESSION:11" "watch -d -n 2 --color 'ss -tlnp | ccze -A -o lookups=off'" Enter
+tmux_cmd send-keys -t "$SESSION:11" "watch -d -n 4 --color 'ss -tlnp'" Enter
 
 tmux_cmd new-window -t "$SESSION" -n "disk"
-tmux_cmd send-keys -t "$SESSION:12" "watch -d -n 2 -c 'CLICOLOR_FORCE=1 duf'" Enter
+tmux_cmd send-keys -t "$SESSION:12" "watch -d -n 4 -c 'CLICOLOR_FORCE=1 duf'" Enter
 
 tmux_cmd new-window -t "$SESSION" -n "nethogs"
-tmux_cmd send-keys -t "$SESSION:13" "sudo nethogs -b" Enter
+tmux_cmd send-keys -t "$SESSION:13" "sudo nethogs -d 5 -b" Enter
 ```
 
 ### Web 2
@@ -233,11 +244,11 @@ tmux_cmd send-keys -t "$SESSION:0" "btop" Enter
 
 # Ventana 1: journalctl
 tmux_cmd new-window -t "$SESSION" -n "journalctl"
-tmux_cmd send-keys -t "$SESSION:1" "journalctl -f -n 500 | ccze -A -o lookups=off" Enter
+tmux_cmd send-keys -t "$SESSION:1" "journalctl -f -n 500" Enter
 
 # Ventana 2: apache access
 tmux_cmd new-window -t "$SESSION" -n "apache access"
-tmux_cmd send-keys -t "$SESSION:2" "tail -f -n 500 /var/log/httpd/access_log | ccze -A -o lookups=off" Enter
+tmux_cmd send-keys -t "$SESSION:2" "tail -f -n 500 /var/log/httpd/access_log" Enter
 
 # Ventana 3: apache errors
 tmux_cmd new-window -t "$SESSION" -n "apache errors"
@@ -248,7 +259,7 @@ tmux_cmd new-window -t "$SESSION" -n "php errors"
 tmux_cmd send-keys -t "$SESSION:4" "tail -f -n 500 /var/log/php-fpm/www-error.log | ccze -A -o lookups=off" Enter
 
 tmux_cmd new-window -t "$SESSION" -n "php-fpm"
-tmux_cmd send-keys -t "$SESSION:5" "watch -d -n 2 --color \"ps aux | grep 'php-fpm: pool' | grep -oP 'pool \K[^ ]+' | sort | uniq -c | sort -nr | ccze -A -o lookups=off\"" Enter
+tmux_cmd send-keys -t "$SESSION:5" "watch -d -n 4 --color \"ps aux | grep 'php-fpm: pool' | grep -oP 'pool \K[^ ]+' | sort | uniq -c | sort -nr\"" Enter
 
 # Ventana 5: auth (Fedora)
 tmux_cmd new-window -t "$SESSION" -n "ssh errors"
@@ -256,14 +267,14 @@ tmux_cmd send-keys -t "$SESSION:6" "sudo tail -f -n 500 /var/log/secure | ccze -
 
 # Ventana 6: puertos
 tmux_cmd new-window -t "$SESSION" -n "puertos"
-tmux_cmd send-keys -t "$SESSION:7" "watch -d -n 2 --color 'ss -tlnp | ccze -A -o lookups=off'" Enter
+tmux_cmd send-keys -t "$SESSION:7" "watch -d -n 4 --color 'ss -tlnp'" Enter
 
 tmux_cmd new-window -t "$SESSION" -n "disk"
-tmux_cmd send-keys -t "$SESSION:8" "watch -d -n 2 -c 'CLICOLOR_FORCE=1 duf'" Enter
+tmux_cmd send-keys -t "$SESSION:8" "watch -d -n 4 -c 'CLICOLOR_FORCE=1 duf'" Enter
 
 # Ventana 7: nethogs
 tmux_cmd new-window -t "$SESSION" -n "nethogs"
-tmux_cmd send-keys -t "$SESSION:9" "sudo nethogs -b" Enter
+tmux_cmd send-keys -t "$SESSION:9" "sudo nethogs -d 5 -b" Enter
 ```
 
 ### Ubuntu DataStorage (Hipervisor)
@@ -272,25 +283,35 @@ tmux_cmd send-keys -t "$SESSION:9" "sudo nethogs -b" Enter
 tmux_cmd send-keys -t "$SESSION:0" "btop" Enter
 
 tmux_cmd new-window -t "$SESSION" -n "journalctl"
-tmux_cmd send-keys -t "$SESSION:1" "journalctl -f -n 500 | ccze -A -o lookups=off" Enter
+tmux_cmd send-keys -t "$SESSION:1" "journalctl -f -n 500" Enter
 
 tmux_cmd new-window -t "$SESSION" -n "VM List"
 tmux_cmd send-keys -t "$SESSION:2" "watch -d -n 2 --color 'VBoxManage list runningvms'" Enter
 
 tmux_cmd new-window -t "$SESSION" -n "VM Info"
-tmux_cmd send-keys -t "$SESSION:3" "watch -d -n 2 --color '/usr/local/bin/vbox-vms.sh | ccze -A'" Enter
+tmux_cmd send-keys -t "$SESSION:3" "watch -d -n 4 --color '/usr/local/bin/vbox-vms.sh'" Enter
 
 tmux_cmd new-window -t "$SESSION" -n "puertos"
-tmux_cmd send-keys -t "$SESSION:4" "watch -d -n 2 --color 'ss -tlnp | ccze -A -o lookups=off'" Enter
+tmux_cmd send-keys -t "$SESSION:4" "watch -d -n 2 --color 'ss -tlnp'" Enter
+
+tmux_cmd new-window -t "$SESSION" -n "trafico"
+tmux_cmd send-keys -t "$SESSION:5" "tcpdump -i any -nn   'tcp[tcpflags] & (tcp-syn|tcp-ack) == tcp-syn and dst port not (3306)'" Enter
 
 tmux_cmd new-window -t "$SESSION" -n "ssh"
-tmux_cmd send-keys -t "$SESSION:5" "tail -f /var/log/auth.log | ccze -A -o lookups=off" Enter
+tmux_cmd send-keys -t "$SESSION:6" "tail -f /var/log/auth.log | ccze -A -o lookups=off" Enter
+
+tmux_cmd new-window -t "$SESSION" -n "ssh 2"
+tmux_cmd send-keys -t "$SESSION:7" "journalctl -u ssh -n 500 -f | ccze -A -o lookups=off" Enter
 
 tmux_cmd new-window -t "$SESSION" -n "disk"
-tmux_cmd send-keys -t "$SESSION:6" "watch -d -n 2 -c 'CLICOLOR_FORCE=1 duf'" Enter
+tmux_cmd send-keys -t "$SESSION:8" "watch -d -n 4 -c 'CLICOLOR_FORCE=1 duf'" Enter
 
 tmux_cmd new-window -t "$SESSION" -n "nethogs"
-tmux_cmd send-keys -t "$SESSION:7" "sudo nethogs -b" Enter
+tmux_cmd send-keys -t "$SESSION:9" "sudo nethogs -d 5 -b" Enter
+
+# TODO: cronwatch para monotirear output de cronjobs
+
+# TODO: agregar metricas de red, CPU, memoria, etc a VM's y observarlas con VMBoxManage metrics query <vm_name> <metric_name>
 ```
 
 ### DNS
