@@ -50,7 +50,7 @@ mkdir -p "$LOG_DIR"
 # 0. Preview Changes (Dry Run)
 # --------------------------
 echo "🔍 Previewing changes (dry run)..."
-rsync -avzt --inplace --delete-before --stats --progress --dry-run --log-file="$LOG_FILE" --exclude='/logs/***' "${RSYNC_INCLUDES[@]}" "$ABS_ORIGIN_PATH/" "$DEPLOY_PATH/"
+rsync -avzt --inplace --delete-before --itemize-changes --stats --progress --dry-run --log-file="$LOG_FILE" --exclude='/logs/***' "${RSYNC_INCLUDES[@]}" "$ABS_ORIGIN_PATH/" "$DEPLOY_PATH/"
 
 echo ""
 echo "⚠️  These are the files that WILL be modified/deleted."
@@ -68,7 +68,7 @@ fi
 # --------------------------
 echo "📤 Transferring files from ${ABS_ORIGIN_PATH} to ${DEPLOY_PATH}..."
 
-rsync -avzt --inplace --delete-before --stats --progress --log-file="$LOG_FILE" --exclude='/logs/***' "${RSYNC_INCLUDES[@]}" "$ABS_ORIGIN_PATH/" "$DEPLOY_PATH/" > "$STANDARD_OUTPUT_LOG_FILE" 2>&1
+rsync -avzt --inplace --delete-before --itemize-changes --stats --progress --log-file="$LOG_FILE" --exclude='/logs/***' "${RSYNC_INCLUDES[@]}" "$ABS_ORIGIN_PATH/" "$DEPLOY_PATH/" > "$STANDARD_OUTPUT_LOG_FILE" 2>&1
 
 if [ $? -ne 0 ]; then
   echo "❌ File transfer failed!"

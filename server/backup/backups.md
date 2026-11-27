@@ -1,4 +1,4 @@
-Client PC:
+Local only PC:
 
 sudo apt install rsync
 
