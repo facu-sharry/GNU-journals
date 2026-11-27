@@ -230,11 +230,14 @@ tmux_cmd send-keys -t "$SESSION:10" "sudo tail -f -n 500 /var/log/secure | ccze 
 tmux_cmd new-window -t "$SESSION" -n "puertos"
 tmux_cmd send-keys -t "$SESSION:11" "watch -d -n 4 --color 'ss -tlnp'" Enter
 
+tmux_cmd new-window -t "$SESSION" -n "trafico"
+tmux_cmd send-keys -t "$SESSION:12" "tcpdump -i any -nn   'tcp[tcpflags] & (tcp-syn|tcp-ack) == tcp-syn and dst port not (3306 or 443 or 80)'" Enter
+
 tmux_cmd new-window -t "$SESSION" -n "disk"
-tmux_cmd send-keys -t "$SESSION:12" "watch -d -n 4 -c 'CLICOLOR_FORCE=1 duf'" Enter
+tmux_cmd send-keys -t "$SESSION:13" "watch -d -n 4 -c 'CLICOLOR_FORCE=1 duf'" Enter
 
 tmux_cmd new-window -t "$SESSION" -n "nethogs"
-tmux_cmd send-keys -t "$SESSION:13" "sudo nethogs -d 5 -b" Enter
+tmux_cmd send-keys -t "$SESSION:14" "sudo nethogs -d 5 -b" Enter
 ```
 
 ### Web 2
@@ -269,12 +272,15 @@ tmux_cmd send-keys -t "$SESSION:6" "sudo tail -f -n 500 /var/log/secure | ccze -
 tmux_cmd new-window -t "$SESSION" -n "puertos"
 tmux_cmd send-keys -t "$SESSION:7" "watch -d -n 4 --color 'ss -tlnp'" Enter
 
+tmux_cmd new-window -t "$SESSION" -n "trafico"
+tmux_cmd send-keys -t "$SESSION:8" "tcpdump -i any -nn   'tcp[tcpflags] & (tcp-syn|tcp-ack) == tcp-syn and dst port not (3306 or 443 or 80)'" Enter
+
 tmux_cmd new-window -t "$SESSION" -n "disk"
-tmux_cmd send-keys -t "$SESSION:8" "watch -d -n 4 -c 'CLICOLOR_FORCE=1 duf'" Enter
+tmux_cmd send-keys -t "$SESSION:9" "watch -d -n 4 -c 'CLICOLOR_FORCE=1 duf'" Enter
 
 # Ventana 7: nethogs
 tmux_cmd new-window -t "$SESSION" -n "nethogs"
-tmux_cmd send-keys -t "$SESSION:9" "sudo nethogs -d 5 -b" Enter
+tmux_cmd send-keys -t "$SESSION:10" "sudo nethogs -d 5 -b" Enter
 ```
 
 ### Ubuntu DataStorage (Hipervisor)
