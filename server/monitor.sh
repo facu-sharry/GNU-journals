@@ -95,21 +95,23 @@ tmux_cmd bind-key '?' list-keys
 # Ventana 0: btop (ya existe por new-session -n "btop")
 tmux_cmd send-keys -t "$SESSION:0" "btop" Enter
 
-# Ventana 1: journalctl
 tmux_cmd new-window -t "$SESSION" -n "journalctl"
-tmux_cmd send-keys -t "$SESSION:1" "journalctl -f -n 500 | ccze -A -o lookups=off" Enter
+tmux_cmd send-keys -t "$SESSION:1" "journalctl -f -n 500" Enter
 
-# Ventana 2: duf
-tmux_cmd new-window -t "$SESSION" -n "duf"
-tmux_cmd send-keys -t "$SESSION:2" "duf" Enter
+tmux_cmd new-window -t "$SESSION" -n "disk"
+tmux_cmd send-keys -t "$SESSION:2" "watch -d -n 4 -c 'CLICOLOR_FORCE=1 duf'" Enter
 
-# Ventana 6: puertos
 tmux_cmd new-window -t "$SESSION" -n "puertos"
-tmux_cmd send-keys -t "$SESSION:3" "ss -tlnp | ccze -A -o lookups=off" Enter
+tmux_cmd send-keys -t "$SESSION:3" "watch -d -n 2 --color 'ss -tlnp'" Enter
 
-# Ventana 7: nethogs
+tmux_cmd new-window -t "$SESSION" -n "tcp syns"
+tmux_cmd send-keys -t "$SESSION:4" "tcpdump -i any -nn   'tcp[tcpflags] & (tcp-syn|tcp-ack) == tcp-syn'" Enter
+
+tmux_cmd new-window -t "$SESSION" -n "ssh"
+tmux_cmd send-keys -t "$SESSION:5" "journalctl -u ssh -n 500 -f | ccze -A -o lookups=off" Enter
+
 tmux_cmd new-window -t "$SESSION" -n "nethogs"
-tmux_cmd send-keys -t "$SESSION:4" "sudo nethogs -b" Enter
+tmux_cmd send-keys -t "$SESSION:6" "sudo nethogs -d 5 -b" Enter
 
 # 4) Seleccionar ventana 0
 tmux_cmd select-window -t "$SESSION:0"
