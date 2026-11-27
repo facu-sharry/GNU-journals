@@ -10,13 +10,13 @@ El script utiliza `tmux` como base, `btop` para monitoreo de recursos y `ccze` p
 
 ```bash
 sudo apt update
-sudo apt install -y tmux btop ccze nethogs iftop duf
+sudo apt install -y tmux btop ccze nethogs iftop duf tcpdump
 ```
 
 ### Fedora (VM de Servidores Web)
 
 ```bash
-sudo dnf install -y tmux btop nethogs iftop ccze duf
+sudo dnf install -y tmux btop nethogs iftop ccze duf tcpdump
 ```
 
 **Nota sobre `ccze` en Fedora:** El paquete `ccze` no está en los repositorios base de Fedora, sino en **EPEL**. Si no lo tienes habilitado, ejecuta primero `sudo dnf install epel-release` y luego `sudo dnf install ccze` . Si prefieres no usar EPEL, puedes omitir `ccze` o compilar desde fuente.
@@ -322,15 +322,40 @@ tmux_cmd send-keys -t "$SESSION:9" "sudo nethogs -d 5 -b" Enter
 
 ### DNS
 ```bash
-# (Comandos de instalación y bloque de send-keys específico)
+# (bloque de send-keys específico)
 ```
 
 ### 250
 ```bash
-# (Comandos de instalación y bloque de send-keys específico)
+# (bloque de send-keys específico)
 ```
 
 ### Backups
 ```bash
-# (Comandos de instalación y bloque de send-keys específico)
+# (bloque de send-keys específico)
 ```
+
+### Personal
+```bash
+# Ventana 0: btop (ya existe por new-session -n "btop")
+tmux_cmd send-keys -t "$SESSION:0" "btop" Enter
+
+tmux_cmd new-window -t "$SESSION" -n "journalctl"
+tmux_cmd send-keys -t "$SESSION:1" "journalctl -f -n 500" Enter
+
+tmux_cmd new-window -t "$SESSION" -n "disk"
+tmux_cmd send-keys -t "$SESSION:2" "watch -d -n 4 -c 'CLICOLOR_FORCE=1 duf'" Enter
+
+tmux_cmd new-window -t "$SESSION" -n "puertos"
+tmux_cmd send-keys -t "$SESSION:3" "watch -d -n 2 --color 'ss -tlnp'" Enter
+
+tmux_cmd new-window -t "$SESSION" -n "tcp syns"
+tmux_cmd send-keys -t "$SESSION:4" "tcpdump -i any -nn   'tcp[tcpflags] & (tcp-syn|tcp-ack) == tcp-syn'" Enter
+
+tmux_cmd new-window -t "$SESSION" -n "ssh"
+tmux_cmd send-keys -t "$SESSION:5" "journalctl -u ssh -n 500 -f | ccze -A -o lookups=off" Enter
+
+tmux_cmd new-window -t "$SESSION" -n "nethogs"
+tmux_cmd send-keys -t "$SESSION:6" "sudo nethogs -d 5 -b" Enter
+```
+
